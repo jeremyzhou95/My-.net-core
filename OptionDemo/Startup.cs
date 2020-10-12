@@ -28,12 +28,12 @@ namespace OptionDemo
         {
             services.AddOrderService(Configuration.GetSection("OrderService"));         //使用拓展方法进行注册，不同的模块使用不同的拓展方法
 
-            services.PostConfigure<OrderServiceOption>(options =>           //动态配置注册对象
-            {
-                options.MaxOrderCount = +100;
-            });
+            //services.PostConfigure<OrderServiceOption>(options =>           //动态配置注册对象
+            //{
+            //    options.MaxOrderCount = +100;
+            //});
 
-            //services.AddControllers();
+            services.AddControllers();
             //services.Configure<OrderServiceOption>(Configuration.GetSection("OrderService"));       //通过Configuration注册，单例模式
             //                                                                                        //services.AddSingleton<OrderServiceOption>();                   //注册配置文件单例
             //                                                                                        //services.AddSingleton<IOrderService,OrderService>();        //注册接口(单例)

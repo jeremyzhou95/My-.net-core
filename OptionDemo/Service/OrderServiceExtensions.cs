@@ -11,7 +11,14 @@ namespace Microsoft.Extensions.DependencyInjection      //继承依赖注入的�
     {
         public static IServiceCollection AddOrderService(this IServiceCollection services, IConfiguration configuration)        //把配置作为参数传入
         {
-            services.Configure<OrderServiceOption>(configuration);
+            //services.Configure<OrderServiceOption>(configuration);
+            services.AddOptions<OrderServiceOption>().Configure(options =>
+            {
+                configuration.Bind(options);
+            }).Validate(options =>
+            {
+                return options.MaxOrderCount > 100;
+            }, "FailMessage");      //增加注册信息验证
             services.AddSingleton<IOrderService, OrderService>();
             return services;
         }
