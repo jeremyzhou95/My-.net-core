@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptionDemo", "OptionDemo\OptionDemo.csproj", "{1B35A46C-C11D-4FCA-8B88-2C9D77937100}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingSimpleDemo", "LoggingSimpleDemo\LoggingSimpleDemo.csproj", "{81366999-ABDD-41A5-AC7F-97D9A91031B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggingSimpleDemo", "LoggingSimpleDemo\LoggingSimpleDemo.csproj", "{81366999-ABDD-41A5-AC7F-97D9A91031B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZJ.Core.WebApi", "ZJ.Core.WebApi\ZJ.Core.WebApi.csproj", "{B0B3C504-DAEB-4117-9FDC-FB9055EF89F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{81366999-ABDD-41A5-AC7F-97D9A91031B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81366999-ABDD-41A5-AC7F-97D9A91031B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81366999-ABDD-41A5-AC7F-97D9A91031B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0B3C504-DAEB-4117-9FDC-FB9055EF89F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0B3C504-DAEB-4117-9FDC-FB9055EF89F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0B3C504-DAEB-4117-9FDC-FB9055EF89F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0B3C504-DAEB-4117-9FDC-FB9055EF89F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
