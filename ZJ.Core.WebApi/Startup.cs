@@ -56,6 +56,9 @@ namespace ZJ.Core.WebApi
             //使用中间件
             app.UseRouting();
 
+            //使用静态文件 wwwroot文件夹
+            app.UseStaticFiles();
+
             app.UseAuthorization();
 
             //使用Swagger中间件
@@ -63,6 +66,33 @@ namespace ZJ.Core.WebApi
             app.UseSwaggerUI(s =>
             {
                 s.SwaggerEndpoint("/swagger/V1/swagger.json", "Test");
+            });
+
+            //注册中间件顺序
+            app.Use(async (context, next) =>
+            {
+                Console.WriteLine("MidWare1 Start");
+                await next();
+                Console.WriteLine("MidWare1 End");
+            });
+
+            app.Use(async (context, next) =>
+            {
+                Console.WriteLine("MidWare2 Start");
+                await next();
+                Console.WriteLine("MidWare2 End");
+            });
+            app.Use(async (context, next) =>
+            {
+                Console.WriteLine("MidWare3 Start");
+                await next();
+                Console.WriteLine("MidWare3 End");
+            });
+            app.Use(async (context, next) =>
+            {
+                Console.WriteLine("MidWare4 Start");
+                await next();
+                Console.WriteLine("MidWare4 End");
             });
 
             app.UseEndpoints(endpoints =>
