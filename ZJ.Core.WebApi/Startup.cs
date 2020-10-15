@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +42,8 @@ namespace ZJ.Core.WebApi
 
             #endregion
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();     //
+
             services.AddControllers();
         }
 
@@ -69,31 +72,31 @@ namespace ZJ.Core.WebApi
             });
 
             //×¢²áÖÐ¼ä¼þË³Ðò
-            app.Use(async (context, next) =>
-            {
-                Console.WriteLine("MidWare1 Start");
-                await next();
-                Console.WriteLine("MidWare1 End");
-            });
+            //app.Use(async (context, next) =>
+            //{
+            //    Console.WriteLine("MidWare1 Start");
+            //    await next();
+            //    Console.WriteLine("MidWare1 End");
+            //});
 
-            app.Use(async (context, next) =>
-            {
-                Console.WriteLine("MidWare2 Start");
-                await next();
-                Console.WriteLine("MidWare2 End");
-            });
-            app.Use(async (context, next) =>
-            {
-                Console.WriteLine("MidWare3 Start");
-                await next();
-                Console.WriteLine("MidWare3 End");
-            });
-            app.Use(async (context, next) =>
-            {
-                Console.WriteLine("MidWare4 Start");
-                await next();
-                Console.WriteLine("MidWare4 End");
-            });
+            //app.Use(async (context, next) =>
+            //{
+            //    Console.WriteLine("MidWare2 Start");
+            //    await next();
+            //    Console.WriteLine("MidWare2 End");
+            //});
+            //app.Use(async (context, next) =>
+            //{
+            //    Console.WriteLine("MidWare3 Start");
+            //    await next();
+            //    Console.WriteLine("MidWare3 End");
+            //});
+            //app.Use(async (context, next) =>
+            //{
+            //    Console.WriteLine("MidWare4 Start");
+            //    await next();
+            //    Console.WriteLine("MidWare4 End");
+            //});
 
             app.UseEndpoints(endpoints =>
             {
