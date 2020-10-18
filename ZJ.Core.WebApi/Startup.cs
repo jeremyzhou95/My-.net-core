@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,8 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
+    
 namespace ZJ.Core.WebApi
 {
     public class Startup
@@ -42,7 +44,28 @@ namespace ZJ.Core.WebApi
 
             #endregion
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();     //
+            var symmetricKeyAsBase64 = "LaoZhouLaoZhouLaoZhouLaoZhou";
+            var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
+            var signingKey = new SymmetricSecurityKey(keyByteArray);
+
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = "http://localhost:5000",//发行人
+                ValidateAudience = true,
+                ValidAudience = "http://localhost:5001",//订阅人
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.FromSeconds(30),
+                RequireExpirationTime = true,
+            };
+             
+            
+
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddHttpContextAccessor();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();     //
 
             services.AddControllers();
         }
@@ -97,11 +120,13 @@ namespace ZJ.Core.WebApi
             //    await next();
             //    Console.WriteLine("MidWare4 End");
             //});
+            app.UseAuthorization();
+            app.UseMvc();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.useendpoints(endpoints =>
+            //{
+            //    endpoints.mapcontrollers();
+            //});
         }
     }
 }

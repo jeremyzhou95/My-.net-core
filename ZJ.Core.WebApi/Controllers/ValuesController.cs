@@ -9,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ZJ.Core.WebApi.Controllers
 {
@@ -18,16 +20,16 @@ namespace ZJ.Core.WebApi.Controllers
     {
         private readonly IHttpContextAccessor _accessor;
 
-        public IHttpContextAccessor HttpContextAccessor => _accessor;
+        public IHttpContextAccessor HttpContextAccessor { get; set; }
 
-        public ValuesController(HttpContextAccessor accessor)
+        public ValuesController(IHttpContextAccessor accessor)      //如果使用依赖注入，则需要显式接受的内容，不能使用HttpContextAccessor
         {
             _accessor = accessor;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
-        {
+        {   
             //简单 创建一个token令牌
 
             var claims = new Claim[]
@@ -60,18 +62,27 @@ namespace ZJ.Core.WebApi.Controllers
 
         [HttpGet]
         [Route("jwtstr")]
+        [Authorize]
         public ActionResult<IEnumerable<string>> Get(string jwtstr)
         {
             //获取 token 内容的方式
             //1
             var jwtHandler = new JwtSecurityTokenHandler();
-            JwtSecurityToken token = jwtHandler.ReadJwtToken(jwtstr);
+            JwtSecurityToken jwttoken = jwtHandler.ReadJwtToken(jwtstr);
 
             //2
             var sub = User.FindFirst(d => d.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
 
             //3
+            //var name = _accessor.HttpContext.User.Identity.Name;
+            //var claims = _accessor.HttpContext.User.Claims;
+            //var claimTypeVal = (from item in claims
+            //                              where item.Type == JwtRegisteredClaimNames.Email
+            //                              select item.Value).ToList();
 
+            return new string[] { JsonConvert.SerializeObject(jwttoken), sub};
+            //return new string[] { JsonConvert.SerializeObject(jwttoken),sub,name,JsonConvert.SerializeObject(claimTypeVal)};
+            
         }
     }
 }
